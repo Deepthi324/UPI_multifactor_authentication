@@ -1,0 +1,253 @@
+.biometric-card {
+  text-align: center;
+}
+
+.bio-amount-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 8px 16px;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-xl);
+}
+
+.fingerprint-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-lg);
+  margin: var(--space-lg) 0;
+}
+
+/* Fingerprint button */
+.fingerprint-btn {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-elevated);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-base);
+  outline: none;
+  overflow: hidden;
+}
+
+.fingerprint-btn:not(:disabled):hover {
+  transform: scale(1.04);
+}
+
+.fingerprint-btn:disabled { cursor: default; }
+
+/* Phase-specific styles */
+.fingerprint-btn.phase-idle {
+  border: 2px solid var(--border-subtle);
+  box-shadow: 0 0 0 0 rgba(79,142,247,0);
+}
+
+.fingerprint-btn.phase-idle:hover {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 20px rgba(79, 142, 247, 0.2);
+}
+
+.fingerprint-btn.phase-scanning {
+  border: 2px solid var(--accent-primary);
+  box-shadow: 0 0 30px rgba(79, 142, 247, 0.3);
+}
+
+.fingerprint-btn.phase-processing {
+  border: 2px solid var(--accent-primary);
+  animation: processingPulse 0.8s ease infinite;
+}
+
+@keyframes processingPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(79, 142, 247, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(79, 142, 247, 0.6); }
+}
+
+.fingerprint-btn.phase-success {
+  border: 2px solid var(--accent-success);
+  box-shadow: 0 0 40px rgba(16, 185, 129, 0.4);
+  background: rgba(16, 185, 129, 0.1);
+  animation: successBounce 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes successBounce {
+  0% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.fingerprint-btn.phase-error {
+  border: 2px solid var(--accent-danger);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.2);
+  animation: errorShake 0.4s ease;
+}
+
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+/* Animated rings */
+.fp-rings {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fp-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(79, 142, 247, 0.2);
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.phase-scanning .fp-ring { border-color: rgba(79, 142, 247, 0.3); }
+.phase-success .fp-ring { border-color: rgba(16, 185, 129, 0.3); }
+
+.r1 { width: 110%; height: 110%; }
+.r2 { width: 125%; height: 125%; }
+.r3 { width: 140%; height: 140%; }
+
+.phase-scanning .r1 { animation: ringPulse 1.5s ease infinite 0s; }
+.phase-scanning .r2 { animation: ringPulse 1.5s ease infinite 0.3s; }
+.phase-scanning .r3 { animation: ringPulse 1.5s ease infinite 0.6s; }
+
+.phase-success .r1 { animation: ringPulseGreen 1.5s ease infinite 0s; }
+.phase-success .r2 { animation: ringPulseGreen 1.5s ease infinite 0.3s; }
+.phase-success .r3 { animation: ringPulseGreen 1.5s ease infinite 0.6s; }
+
+@keyframes ringPulse {
+  0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.1; transform: translate(-50%, -50%) scale(1.05); }
+}
+
+@keyframes ringPulseGreen {
+  0%, 100% { opacity: 0.5; border-color: rgba(16, 185, 129, 0.4); }
+  50% { opacity: 0.1; }
+}
+
+/* Fingerprint SVG icon */
+.fp-icon {
+  width: 70px;
+  height: 70px;
+  stroke: var(--text-secondary);
+  fill: none;
+  transition: stroke var(--transition-base);
+  position: relative;
+  z-index: 2;
+}
+
+.phase-scanning .fp-icon { stroke: var(--accent-primary); }
+.phase-processing .fp-icon { stroke: var(--accent-primary); }
+.phase-success .fp-icon { stroke: var(--accent-success); opacity: 0.3; }
+.phase-error .fp-icon { stroke: var(--accent-danger); }
+
+/* Scan fill overlay */
+.fp-scan-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(79, 142, 247, 0.25), rgba(79, 142, 247, 0.05));
+  transition: height 0.1s linear;
+  z-index: 1;
+  border-radius: 0 0 50% 50%;
+}
+
+/* Success icon */
+.fp-success-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: var(--accent-success);
+  z-index: 3;
+  animation: successPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes successPop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Progress bar */
+.bio-progress-track {
+  width: 200px;
+  height: 4px;
+  background: var(--bg-elevated);
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.bio-progress-fill {
+  height: 100%;
+  background: var(--gradient-primary);
+  border-radius: 2px;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(79, 142, 247, 0.5);
+}
+
+/* Phase labels */
+.phase-label {
+  font-size: 0.9375rem;
+  margin-bottom: var(--space-lg);
+  transition: color var(--transition-base);
+}
+
+.phase-label-idle { color: var(--text-secondary); }
+.phase-label-scanning { color: var(--accent-primary); }
+.phase-label-processing { color: var(--accent-primary); }
+.phase-label-success {
+  color: var(--accent-success);
+  font-weight: 600;
+  font-family: var(--font-display);
+}
+.phase-label-error { color: var(--accent-danger); }
+
+/* Ridge decorations */
+.bio-ridges {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: var(--space-md) 0 var(--space-lg);
+  opacity: 0.15;
+}
+
+.ridge {
+  width: 3px;
+  height: 24px;
+  border-radius: 2px;
+  background: var(--text-secondary);
+  animation: ridgeWave 2s ease infinite;
+}
+
+@keyframes ridgeWave {
+  0%, 100% { transform: scaleY(1); opacity: 0.8; }
+  50% { transform: scaleY(0.6); opacity: 0.4; }
+}
+
+.step-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.step-detail {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}

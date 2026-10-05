@@ -1,0 +1,162 @@
+.qr-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: var(--space-lg) auto;
+  transition: transform var(--transition-base);
+}
+
+.qr-container.scanning .qr-code {
+  box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.5), 0 0 30px rgba(79, 142, 247, 0.3);
+}
+
+.qr-container.scanned .qr-code {
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.5), 0 0 30px rgba(16, 185, 129, 0.3);
+}
+
+.qr-code {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow var(--transition-base);
+  padding: 12px;
+}
+
+.qr-svg {
+  width: 100%;
+  height: 100%;
+  color: #111;
+}
+
+/* Scanner line animation */
+.scanner-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #4f8ef7, transparent);
+  box-shadow: 0 0 8px rgba(79, 142, 247, 0.8);
+  animation: scanDown 1s ease-in-out infinite;
+  z-index: 5;
+}
+
+@keyframes scanDown {
+  0% { top: 0; opacity: 1; }
+  50% { top: calc(100% - 3px); opacity: 1; }
+  51% { top: calc(100% - 3px); opacity: 0; }
+  52% { top: 0; opacity: 0; }
+  53% { opacity: 1; }
+  100% { top: 0; }
+}
+
+/* QR corner brackets */
+.qr-corner {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-color: var(--accent-primary);
+  border-style: solid;
+  transition: border-color var(--transition-base);
+}
+
+.qr-container.scanned .qr-corner {
+  border-color: var(--accent-success);
+}
+
+.qr-corner.tl { top: -4px; left: -4px; border-width: 3px 0 0 3px; border-radius: 4px 0 0 0; }
+.qr-corner.tr { top: -4px; right: -4px; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
+.qr-corner.bl { bottom: -4px; left: -4px; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
+.qr-corner.br { bottom: -4px; right: -4px; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
+
+/* Success overlay */
+.scan-success-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(16, 185, 129, 0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  animation: successFadeIn 0.4s ease forwards;
+  border-radius: var(--radius-md);
+}
+
+@keyframes successFadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.checkmark-circle {
+  width: 60px;
+  height: 60px;
+}
+
+.checkmark-circle svg {
+  width: 100%;
+  height: 100%;
+  stroke: #fff;
+}
+
+.checkmark-path {
+  stroke-dasharray: 50;
+  stroke-dashoffset: 50;
+  animation: drawCheck 0.5s ease 0.2s forwards;
+}
+
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}
+
+.scan-success-overlay span {
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.qr-label {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+
+.qr-upi-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  padding: 6px 16px;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  font-family: monospace;
+}
+
+.scanning-btn {
+  animation: pulse 1s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(79, 142, 247, 0.35); }
+  50% { box-shadow: 0 4px 30px rgba(79, 142, 247, 0.6); }
+}
+
+.step-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.step-detail {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}

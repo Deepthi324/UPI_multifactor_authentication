@@ -1,0 +1,191 @@
+.otp-card { text-align: center; }
+
+.otp-amount-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.otp-amount-row strong {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  color: var(--accent-primary);
+}
+
+/* Simulation banner */
+.sim-otp-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px dashed rgba(16, 185, 129, 0.3);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  margin-bottom: var(--space-lg);
+  animation: fadeIn 0.4s ease;
+}
+
+.sim-label {
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-success);
+  font-weight: 600;
+}
+
+.sim-code {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  color: var(--accent-success);
+}
+
+.sim-note {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+}
+
+/* OTP input boxes */
+.otp-inputs {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.otp-box {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  outline: none;
+  transition: all var(--transition-base);
+  caret-color: var(--accent-primary);
+}
+
+.otp-box:focus {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.15);
+  background: var(--bg-card-hover);
+}
+
+.otp-box.filled {
+  border-color: var(--accent-primary);
+  background: rgba(79, 142, 247, 0.08);
+}
+
+.otp-box.error {
+  border-color: var(--accent-danger);
+  background: rgba(239, 68, 68, 0.06);
+  animation: shake 0.35s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-4px); }
+  40%, 80% { transform: translateX(4px); }
+}
+
+/* Timer */
+.otp-timer {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-md);
+}
+
+.otp-timer strong { color: var(--accent-primary); }
+.otp-timer.urgent strong { color: var(--accent-danger); }
+.otp-timer .expired { color: var(--accent-danger); font-weight: 600; }
+
+/* Attempts indicator */
+.attempts-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.attempt-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  border: 1px solid var(--accent-primary);
+  transition: all var(--transition-base);
+}
+
+.attempt-dot.used {
+  background: transparent;
+  border-color: var(--accent-danger);
+}
+
+.attempts-label {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* Locked state */
+.locked-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xl) 0;
+}
+
+.lock-icon { font-size: 3rem; }
+
+.locked-state h3 {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: var(--accent-danger);
+}
+
+.locked-state p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  max-width: 300px;
+  line-height: 1.6;
+}
+
+/* Footer links */
+.otp-footer {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--border-subtle);
+}
+
+.step-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+}
+
+.step-detail {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
